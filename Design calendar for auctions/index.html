@@ -1,0 +1,82 @@
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
+<style type="text/css">
+.tbStyle,.tbStyle td,.tbStyle th {
+border:1px solid #000;
+border-collapse:collapse;
+padding:0 4px;
+}
+
+.odd {
+background-color:#FFF;
+}
+
+.even {
+background-color:#e8edff;
+}
+
+.odd:hover,.even:hover {
+background-color:#fe9900;
+}
+</style>
+
+<script type ="text/javascript">
+var num = 1;
+var className = " ";
+var jsonData = " ";
+
+function parseJSON() {
+  $("#divMessage").css("display", "block");
+  $('.placeHolder').html("");
+  num = 1;
+  jsonData = $.trim($("#txtData").val());
+  $.getJSON(jsonData, function (data) {
+    $.each(data, function (key, val) {
+      getJson(val);
+    });
+    $("#divMessage").css("display", "none");
+  });
+}
+
+function getJson(JData) {
+  $.each(JData, function (Jkey, Jval) {
+    if (Jval && typeof Jval == "object") {
+      getJson(Jval);
+    } else {
+      if (num == 1) {
+        $('.placeHolder').append("<tr><th>Key</th><th>Value</td></th>");
+      }
+      if(Jkey == "facility")
+       $('.placeHolder').append("<tr><td>" + Jval + "</td>")
+       if(Jkey == "currentSaleTimeEpoch")
+        $('.placeHolder').append("<td>" + Jval + "</td></tr>")
+      num = num + 1;
+    }
+  });
+}
+</script>
+
+<meta name="description" content="OnLine JSON Parser Using JQuery By ShivaSoft, Parse JSON Using JQuery, JSON each using JQuery" />
+<meta name="keywords" content="Online Parser, JQuery, JSON, Parse, Online JSON Parser, Online universal JSON Parser" />
+<title>
+OnLine JSON Parser
+</title>
+</head>
+<body>
+
+<p>Enter JSON URL:</p>
+<textarea rows="3" cols="100" id="txtData">sale-data.json</textarea>
+<br />
+<input type="button" value="Submit" onClick="javascript:parseJSON();" />
+<p></p>
+<div id="divMessage" style="display:none;">
+loading... Please wait&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="http://shivasoft.in/images/loading.gif" />
+</div>
+<table class="tbStyle">
+<tr class="placeHolder">
+</tr>
+</table>
+
+</body>
+</html>
