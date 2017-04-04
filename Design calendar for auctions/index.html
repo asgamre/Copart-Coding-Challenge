@@ -44,13 +44,18 @@ function getJson(JData) {
     if (Jval && typeof Jval == "object") {
       getJson(Jval);
     } else {
+      // $('.placeHolder').append("<tr>");
       if (num == 1) {
-        $('.placeHolder').append("<tr><th>Key</th><th>Value</td></th>");
+        $('.placeHolder').append("<tr><th>Dates,Facilities</th></tr>");
       }
-      if(Jkey == "facility")
-       $('.placeHolder').append("<tr><td>" + Jval + "</td>")
-       if(Jkey == "currentSaleTimeEpoch")
-        $('.placeHolder').append("<td>" + Jval + "</td></tr>")
+      if(Jkey == "facility" ){
+      $('.placeHolder').append("<tr>");
+       $('.placeHolder').append("<tr><td>" + Jval+"</td></tr>");
+      }
+      else if(Jkey == "currentSaleTimeEpoch" ){
+       $('.placeHolder').append("<tr><td>"+ new Date(Jval*1000) + "</td>");
+       $('.placeHolder').append("</tr>");
+     }
       num = num + 1;
     }
   });
